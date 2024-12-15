@@ -1,0 +1,14 @@
+# harvestapi-js:
+#   filter: rjsmin
+#   output: ckanext-harvestapi/%(version)s-harvestapi.js
+#   contents:
+#     - js/harvestapi.js
+#   extra:
+#     preload:
+#       - base/main
+
+# harvestapi-css:
+#   filter: cssrewrite
+#   output: ckanext-harvestapi/%(version)s-harvestapi.css
+#   contents:
+#     - css/harvestapi.css
