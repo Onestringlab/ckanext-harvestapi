@@ -3,6 +3,8 @@ import requests
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
+from flask import Blueprint, jsonify, request
+
 
 class HarvestapiPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
