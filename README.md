@@ -1,6 +1,6 @@
 [![Tests](https://github.com/Metanouva/ckanext-harvestapi/workflows/Tests/badge.svg?branch=main)](https://github.com/Metanouva/ckanext-harvestapi/actions)
 
-# ckanext-harvestapi 2024
+# ckanext-harvestapi SDI-2024
 
 **TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
 
