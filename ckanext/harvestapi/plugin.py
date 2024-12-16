@@ -104,7 +104,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 harvest_source_id = payload.get('harvest_source_id')
 
                 package_detail = get_package_detail(harvest_source_id)
-                print(package_detail)
+                # print(package_detail)
 
                 # Parameter untuk Solr
                 params = {
@@ -119,7 +119,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
 
-                return jsonify({"success": True, "email": email, "data": response})
+                return jsonify({"success": True, "email": email, "data": response, "about": package_detail})
 
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
