@@ -52,7 +52,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 harvest_objects = toolkit.get_action('package_activity_list')(
                     context={"user":username}, 
-                    params={'limit': 10, 'offset': 0,'id':'a16b19f3-4883-4a13-8846-5a60c82313b6'}
+                    data_dict={'limit': 10, 'offset': 0,'id':'a16b19f3-4883-4a13-8846-5a60c82313b6'}
                 )
 
                 # Kembalikan data dalam format JSON
