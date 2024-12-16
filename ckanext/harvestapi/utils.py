@@ -54,7 +54,7 @@ def get_package_detail(id):
         # Tangani error lainnya
         raise Exception(f"An error occurred: {str(e)}")
 
-def get_username_capacity(username, group_id=None):
+def get_organization_admin(username, group_id=None):
     # Query menggunakan parameterized query untuk keamanan
     query = '''
         SELECT 
@@ -70,6 +70,7 @@ def get_username_capacity(username, group_id=None):
             m.state = 'active' 
             AND g.type = 'organization'
             AND u.name = :username
+            AND m.capacity = 'Admin'
     '''
 
     result = query_custom(query, {'username': username})

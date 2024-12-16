@@ -7,7 +7,7 @@ from ckan.logic import get_action
 from flask import Blueprint, jsonify, request
 from ckanext.harvest.model import HarvestObject
 
-from ckanext.harvestapi.utils import get_username, get_package_detail, get_username_capacity
+from ckanext.harvestapi.utils import get_username, get_package_detail, get_organization_admin
 
 
 class HarvestapiPlugin(plugins.SingletonPlugin):
@@ -105,7 +105,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 package_detail = get_package_detail(harvest_source_id)
                 owner_org = package_detail["owner_org"]
-                username_capacity = get_username_capacity(username,owner_org)
+                username_capacity = get_organization_admin(username,owner_org)
                 print(username_capacity)
 
                 # Parameter untuk Solr
