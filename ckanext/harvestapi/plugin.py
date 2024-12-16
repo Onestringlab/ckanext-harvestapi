@@ -4,6 +4,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
 from flask import Blueprint, jsonify, request
+from ckanext.harvest.model import HarvestObject
 
 
 class HarvestapiPlugin(plugins.SingletonPlugin):
@@ -28,8 +29,31 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             Route untuk /welcome_harvest
             """
             return jsonify({
-                "message": "Welcome to Harvest API !",
+                "message": "Welcome to Harvest API !!!",
                 "success": True
             })
+
+        @blueprint.route("/harvest_data", methods=["GET"])
+        def get_harvest_data():
+            """
+            Endpoint untuk mendapatkan data harvest
+            """
+            try:
+                # Query data dari tabel HarvestObject (atau sesuai kebutuhan Anda)
+                harvest_objects = toolkit.get_action('harvest_object_list')(
+                    data_dict={}
+                )
+                
+                # Kembalikan data dalam format JSON
+                return jsonify({
+                    "success": True,
+                    "result": harvest_objects
+                })
+            except Exception as e:
+                # Tangani error dan kembalikan pesan
+                return jsonify({
+                    "success": False,
+                    "error": str(e)
+                }), 500
 
         return blueprint_harvestapi
