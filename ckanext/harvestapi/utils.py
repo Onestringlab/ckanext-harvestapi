@@ -95,8 +95,12 @@ def get_organization_admin(username, group_id=None):
 
 def has_created_harvest(username):
     capacity = get_organization_admin(username)
-    return capacity
+    if(len(capacity>0)):
+        return True
+    return False
 
 def has_managed_harvest(username, group_id):
     capacity = get_organization_admin(username, group_id)
-    return capacity
+    if(len(capacity>0)):
+        return True
+    return False

@@ -52,7 +52,6 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 _, email = get_username(token)
                 username = email.split('@')[0]
                 create_harvest = has_created_harvest(username)
-                print("create_harvest:", len(create_harvest))
 
                 # Ambil parameter dari payload JSON
                 query = payload.get('q', '').strip()
@@ -81,7 +80,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
 
-                return jsonify({"success": True, "email": email, "data": response})
+                return jsonify({"success": True, "email": email, "data": response, "has_created_harvest": create_harvest })
 
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
@@ -109,7 +108,6 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 package_detail = get_package_detail(harvest_source_id)
                 owner_org = package_detail["owner_org"]
                 manage_harvest = has_managed_harvest(username, owner_org)
-                print("manage_harvest:", len(manage_harvest))
 
                 # Parameter untuk Solr
                 params = {
@@ -124,7 +122,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
 
-                return jsonify({"success": True, "email": email, "data": response, "about": package_detail})
+                return jsonify({"success": True, "email": email, "data": response, "about": package_detail,
+                                    "has_managed_harvest": manage_harvest})
 
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
