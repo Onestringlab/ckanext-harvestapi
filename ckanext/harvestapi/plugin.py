@@ -8,6 +8,7 @@ from flask import Blueprint, jsonify, request
 from ckanext.harvest.model import HarvestObject
 
 from ckanext.harvestapi.utils import get_username, get_package_detail, get_organization_admin
+from ckanext.harvestapi.utils import has_created_harvest,has_managed_harvest
 
 
 class HarvestapiPlugin(plugins.SingletonPlugin):
@@ -50,6 +51,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 token = request.headers.get("Authorization")
                 _, email = get_username(token)
                 username = email.split('@')[0]
+                create_harvest = has_created_harvest(username)
+                print("create_harvest:", create_harvest)
 
                 # Ambil parameter dari payload JSON
                 query = payload.get('q', '').strip()
@@ -105,8 +108,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 package_detail = get_package_detail(harvest_source_id)
                 owner_org = package_detail["owner_org"]
-                create_harvest = create_harvest(username,owner_org)
-                print("create_harvest: ", create_harvest)
+                manage_harvest = has_managed_harvest(username, owner_org)
+                print("manage_harvest:", manage_harvest)
 
                 # Parameter untuk Solr
                 params = {
