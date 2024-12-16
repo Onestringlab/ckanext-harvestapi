@@ -56,40 +56,65 @@ def get_package_detail(id):
 
 def get_organization_admin(username, group_id=None):
     # Query menggunakan parameterized query untuk keamanan
-    query = '''
-        SELECT 
-            u.name AS user_name, 
-            u.id AS user_id, 
-            g.title AS organization_title,
-            g.name AS organization_name, 
-            m.capacity
-        FROM "member" m
-        JOIN "user" u ON m.table_id = u.id
-        JOIN "group" g ON m.group_id = g.id
-        WHERE 
-            m.state = 'active' 
-            AND g.type = 'organization'
-            AND u.name = :username
-            AND m.capacity = 'admin'
-    '''
+    # Mendapatkan pengguna berdasarkan user_id
+    user = User.get(username)
+    if user.sysadmin:
+        query = '''
+            SELECT 
+                g.group_id, 
+                g.title AS organization_title,
+                g.name AS organization_name, 
+            FROM "group" g
+            order by g.name asc
+        '''
+        result = query_custom(query)
+        data = [
+            {
+                "user_name": user.name,
+                "user_id": user.id,
+                "group_id": row[0],
+                "organization_title": row[1],
+                "organization_name": row[2],
+                "capacity": "admin"
+            }
+            for row in result
+        ]
 
-    result = query_custom(query, {'username': username})
+    else:
+        query = '''
+            SELECT 
+                u.name AS user_name, 
+                u.id AS user_id, 
+                g.title AS organization_title,
+                g.name AS organization_name, 
+                m.capacity
+            FROM "member" m
+            JOIN "user" u ON m.table_id = u.id
+            JOIN "group" g ON m.group_id = g.id
+            WHERE 
+                m.state = 'active' 
+                AND g.type = 'organization'
+                AND u.name = :username
+                AND m.capacity = 'admin'
+        '''
 
-    if group_id:
-        query += ' AND g.id = :group_id'
-        result = query_custom(query, {'username': username,'group_id': group_id})
+        result = query_custom(query, {'username': username})
 
-    # Konversi hasil query menjadi daftar dictionary
-    data = [
-        {
-            "user_name": row[0],
-            "user_id": row[1],
-            "organization_title": row[2],
-            "organization_name": row[3],
-            "capacity": row[4]
-        }
-        for row in result
-    ]
+        if group_id:
+            query += ' AND g.id = :group_id'
+            result = query_custom(query, {'username': username,'group_id': group_id})
+
+        # Konversi hasil query menjadi daftar dictionary
+        data = [
+            {
+                "user_name": row[0],
+                "user_id": row[1],
+                "organization_title": row[2],
+                "organization_name": row[3],
+                "capacity": row[4]
+            }
+            for row in result
+        ]
 
     return data
 
