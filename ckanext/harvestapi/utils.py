@@ -3,6 +3,14 @@ import jwt
 from flask import jsonify
 from ckan.plugins import toolkit
 
+def query_custom(query, params=None):
+    """
+    Helper function untuk menjalankan query ke database CKAN.
+    """
+    session = meta.Session
+    result = session.execute(query, params or {})
+    return result.fetchall()
+
 def get_username(jwt_token):
     try:
         # Dekode JWT tanpa memvalidasi signature dan expiration
