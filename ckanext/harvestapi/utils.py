@@ -22,7 +22,7 @@ def get_username(jwt_token):
 
 def get_package_detail(id):
     try:
-        # Pastikan identifier tidak kosong
+        # Pastikan id tidak kosong
         if not id:
             raise ValueError("Package ID or name is required")
 
@@ -30,7 +30,7 @@ def get_package_detail(id):
         context = {"ignore_auth": True}  # Abaikan autentikasi (opsional)
 
         # Data dictionary untuk aksi package_show
-        data_dict = {"id": identifier}
+        data_dict = {"id": id}
 
         # Jalankan aksi package_show
         package_detail = toolkit.get_action("package_show")(context, data_dict)
@@ -40,7 +40,7 @@ def get_package_detail(id):
 
     except toolkit.ObjectNotFound:
         # Tangani jika package tidak ditemukan
-        raise Exception(f"Package with ID or name '{identifier}' not found.")
+        raise Exception(f"Package with ID or name '{id}' not found.")
     except Exception as e:
         # Tangani error lainnya
         raise Exception(f"An error occurred: {str(e)}")
