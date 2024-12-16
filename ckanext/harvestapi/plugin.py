@@ -103,8 +103,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 start = int(payload.get('start', 0))
                 harvest_source_id = payload.get('harvest_source_id')
 
-                get_package_detail = get_package_detail(harvest_source_id)
-                print(get_package_detail)
+                package_detail = get_package_detail(harvest_source_id)
+                print(package_detail)
 
                 # Parameter untuk Solr
                 params = {
