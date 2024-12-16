@@ -6,6 +6,8 @@ import ckan.plugins.toolkit as toolkit
 from flask import Blueprint, jsonify, request
 from ckanext.harvest.model import HarvestObject
 
+from ckanext.harvestapi.utils import get_username
+
 
 class HarvestapiPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
