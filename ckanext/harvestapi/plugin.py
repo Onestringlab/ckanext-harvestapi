@@ -6,7 +6,7 @@ import ckan.plugins.toolkit as toolkit
 from flask import Blueprint, jsonify, request
 from ckanext.harvest.model import HarvestObject
 
-from ckanext.harvestapi.utils import get_username
+from ckanext.harvestapi.utils import get_username, available_actions
 
 
 class HarvestapiPlugin(plugins.SingletonPlugin):
@@ -49,11 +49,12 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 params = {'limit': 10, 'offset': 0} 
                 context = {"user": username}
                 print(context,username)
+                print(available_actions())
 
-                harvest_objects = toolkit.get_action('harvest_object_list')(
-                    context={"user":username}, 
-                    data_dict={}
-                )
+                # harvest_objects = toolkit.get_action('harvest_object_list')(
+                #     context={"user":username}, 
+                #     params={'limit': 10, 'offset': 0}
+                # )
 
                 # Kembalikan data dalam format JSON
                 return jsonify({
