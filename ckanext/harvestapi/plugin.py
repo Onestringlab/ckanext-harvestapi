@@ -104,7 +104,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 harvest_source_id = payload.get('harvest_source_id')
 
                 package_detail = get_package_detail(harvest_source_id)
-                owner_org = package_detail["about"]["owner_org"]
+                # owner_org = package_detail["about"]["owner_org"]
                 # username_capacity = get_username_capacity(username,owner_org)
                 print(package_detail)
 
