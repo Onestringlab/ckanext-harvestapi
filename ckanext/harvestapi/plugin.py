@@ -49,12 +49,12 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 params = {'limit': 10, 'offset': 0} 
                 context = {'ignore_auth': True}
 
-                harvest_objects = toolkit.get_action('harvest_object_list')(context, params)
-                
+                # harvest_objects = toolkit.get_action('harvest_object_list')(context, params)
+                print(username)
                 # Kembalikan data dalam format JSON
                 return jsonify({
                     "success": True,
-                    "result": harvest_objects
+                    "result": "harvest_objects"
                 })
             except Exception as e:
                 # Tangani error dan kembalikan pesan
