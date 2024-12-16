@@ -48,10 +48,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 params = {'limit': 10, 'offset': 0} 
                 context = {"user": username}
-
+                print(context,username)
 
                 harvest_objects = toolkit.get_action('harvest_object_list')(context, params)
-                print(context,username)
 
                 # Kembalikan data dalam format JSON
                 return jsonify({
