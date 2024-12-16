@@ -72,7 +72,7 @@ def get_organization_admin(username, group_id=None):
             {
                 "user_name": user.name,
                 "user_id": user.id,
-                "group_id": row[0],
+                "organization_id": row[0],
                 "organization_title": row[1],
                 "organization_name": row[2],
                 "capacity": "admin"
@@ -110,7 +110,7 @@ def get_organization_admin(username, group_id=None):
             {
                 "user_name": row[1],
                 "user_id": row[2],
-                "group_id": row[0],
+                "organization_id": row[0],
                 "organization_title": row[3],
                 "organization_name": row[4],
                 "capacity": row[5]
