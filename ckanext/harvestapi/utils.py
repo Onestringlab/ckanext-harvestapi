@@ -61,7 +61,7 @@ def get_organization_admin(username, group_id=None):
     if user.sysadmin:
         query = '''
             SELECT 
-                g.group_id, 
+                g.id, 
                 g.title AS organization_title,
                 g.name AS organization_name
             FROM "group" g
