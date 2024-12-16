@@ -63,7 +63,7 @@ def get_organization_admin(username, group_id=None):
             SELECT 
                 g.group_id, 
                 g.title AS organization_title,
-                g.name AS organization_name, 
+                g.name AS organization_name
             FROM "group" g
             order by g.name asc
         '''
