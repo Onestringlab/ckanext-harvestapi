@@ -132,6 +132,18 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
         @blueprint_harvestapi.route("/get-admin-organization", methods=["POST"])
         def get_admin_organization():
-            pass
+            try:
+                # Ambil payload dari request body
+                payload = request.get_json()
+                if not payload:
+                    return jsonify({"success": False, "error": "Request body is required"}), 400
 
+                token = request.headers.get("Authorization")
+                _, email = get_username(token)
+                username = email.split('@')[0]
 
+                organization_admin = get_organization_admin(username)
+                return jsonify({"success": True, "email": email, "data": organization_admin})
+
+            except Exception as e:
+                return jsonify({"success": False, "error": str(e)}), 500
