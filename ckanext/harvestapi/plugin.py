@@ -59,12 +59,19 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 start = int(payload.get('start', 0))
                 sort = payload.get('sort', 'prioritas_tahun desc')
                 facet_limit = int(payload.get('facet.limit', 500))
+                frequency = payload.get('frequency', '').strip()
+                source_type = payload.get('source_type', '').strip()
 
                 # Periksa panjang query
                 if len(query) == 0:  # Jika panjang query 0
                     query = '*:*'
                 elif query != '*:*':  # Jika query bukan '*:*', gunakan format pencarian
                     query = f"(title:*{query}* OR notes:*{query}*)"
+
+                if frequency:
+                    query += f" AND frequency:{frequency}"
+                if source_type:
+                    query += f" AND source_type:{source_type}"
 
                 # Parameter untuk Solr
                 params = {
