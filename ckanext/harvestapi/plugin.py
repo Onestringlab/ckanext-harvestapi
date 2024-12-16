@@ -42,30 +42,44 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             Endpoint untuk mendapatkan data harvest
             """
             try:
-                # Query data dari tabel HarvestObject (atau sesuai kebutuhan Anda)
+                # Ambil payload dari request body
+                payload = request.get_json()
+                if not payload:
+                    return jsonify({"success": False, "error": "Request body is required"}), 400
+
                 token = request.headers.get("Authorization")
-                preferred_username, email = get_username(token)
+                _, email = get_username(token)
                 username = email.split('@')[0]
 
-                params = {'limit': 10, 'offset': 0} 
-                context = {"user": username}
-                print(context,username)
+                # Ambil parameter dari payload JSON
+                query = payload.get('q', '').strip()
+                rows = int(payload.get('rows', 10))
+                start = int(payload.get('start', 0))
+                sort = payload.get('sort', 'prioritas_tahun desc')
 
-                harvest_objects = get_action('harvest_object_list')(
-                    context={"user":username}, 
-                    data_dict={}
-                )
+                # Periksa panjang query
+                if len(query) == 0:  # Jika panjang query 0
+                    query = '*:*'
+                elif query != '*:*':  # Jika query bukan '*:*', gunakan format pencarian
+                    query = f"(title:*{query}* OR notes:*{query}*)"
 
-                # Kembalikan data dalam format JSON
-                return jsonify({
-                    "success": True,
-                    "result": "harvest_objects"
-                })
+                # Parameter untuk Solr
+                params = {
+                    'q': query,  # Query utama
+                    'wt': 'json',
+                    'rows': rows,
+                    'start': start,
+                    'sort': sort
+                }
+
+                context = {'user': username,'ignore_auth': True}
+
+                # Jalankan package_search
+                response = get_action('package_search')(context, params)
+
+                return jsonify({"success": True, "email": email, "data": response})
+
             except Exception as e:
-                # Tangani error dan kembalikan pesan
-                return jsonify({
-                    "success": False,
-                    "error": str(e)
-                }), 500
+                return jsonify({"success": False, "error": str(e)}), 500
 
         return blueprint_harvestapi
