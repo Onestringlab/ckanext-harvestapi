@@ -33,7 +33,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 "success": True
             })
 
-        @blueprint_harvestapi.route("/harvest_data", methods=["GET"])
+        @blueprint_harvestapi.route("/get-harvest-data", methods=["POST"])
         def get_harvest_data():
             """
             Endpoint untuk mendapatkan data harvest
