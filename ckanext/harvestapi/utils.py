@@ -44,3 +44,41 @@ def get_package_detail(id):
     except Exception as e:
         # Tangani error lainnya
         raise Exception(f"An error occurred: {str(e)}")
+
+def get_username_capacity(username, group_id=None):
+    # Query menggunakan parameterized query untuk keamanan
+    query = '''
+        SELECT 
+            u.name AS user_name, 
+            u.id AS user_id, 
+            g.title AS organization_title,
+            g.name AS organization_name, 
+            m.capacity
+        FROM "member" m
+        JOIN "user" u ON m.table_id = u.id
+        JOIN "group" g ON m.group_id = g.id
+        WHERE 
+            m.state = 'active' 
+            AND g.type = 'organization'
+            AND u.name = :username
+    '''
+
+    result = query_custom(query, {'username': username})
+
+    if group_id:
+        query += ' AND g.id = :group_id'
+        result = query_custom(query, {'username': username,'group_id': group_id})
+
+    # Konversi hasil query menjadi daftar dictionary
+    data = [
+        {
+            "user_name": row[0],
+            "user_id": row[1],
+            "organization_title": row[2],
+            "organization_name": row[3],
+            "capacity": row[4]
+        }
+        for row in result
+    ]
+
+    return data

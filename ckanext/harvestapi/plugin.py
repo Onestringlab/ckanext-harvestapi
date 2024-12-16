@@ -104,7 +104,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 harvest_source_id = payload.get('harvest_source_id')
 
                 package_detail = get_package_detail(harvest_source_id)
-                # print(package_detail)
+                owner_org = package_detail["about"]["owner_org"]
+                username_capacity = get_username_capacity(username,owner_org)
+                print(username_capacity)
 
                 # Parameter untuk Solr
                 params = {
@@ -125,3 +127,5 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 return jsonify({"success": False, "error": str(e)}), 500
 
         return blueprint_harvestapi
+
+
