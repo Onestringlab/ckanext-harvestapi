@@ -72,7 +72,10 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     'rows': rows,
                     'start': start,
                     'sort': sort,
-                    'fq': 'dataset_type:harvest' 
+                    'fq': 'dataset_type:harvest',
+                    'facet': 'true',
+                    'facet.field': ['frequency', 'source_type'],
+                    'facet.limit': facet_limit, 
                 }
 
                 context = {'user': username,'ignore_auth': True}
