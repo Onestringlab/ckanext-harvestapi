@@ -58,6 +58,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 rows = int(payload.get('rows', 10))
                 start = int(payload.get('start', 0))
                 sort = payload.get('sort', 'prioritas_tahun desc')
+                facet_limit = int(payload.get('facet.limit', 500))
 
                 # Periksa panjang query
                 if len(query) == 0:  # Jika panjang query 0
@@ -75,7 +76,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     'fq': 'dataset_type:harvest',
                     'facet': 'true',
                     'facet.field': ['frequency', 'source_type'],
-                    'facet.limit': facet_limit, 
+                    'facet.limit': facet_limit
                 }
 
                 context = {'user': username,'ignore_auth': True}
