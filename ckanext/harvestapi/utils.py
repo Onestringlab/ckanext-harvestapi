@@ -92,3 +92,7 @@ def get_organization_admin(username, group_id=None):
     ]
 
     return data
+
+def create_harvest(username, group_id=None):
+    capacity = get_organization_admin(username, group_id)
+    return capacity

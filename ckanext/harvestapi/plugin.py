@@ -105,8 +105,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 package_detail = get_package_detail(harvest_source_id)
                 owner_org = package_detail["owner_org"]
-                username_capacity = get_organization_admin(username,owner_org)
-                print("username_capacity: ", username_capacity)
+                create_harvest = create_harvest(username,owner_org)
+                print("create_harvest: ", create_harvest)
 
                 # Parameter untuk Solr
                 params = {
