@@ -83,6 +83,7 @@ def get_organization_admin(username, group_id=None):
     else:
         query = '''
             SELECT 
+                g.id,
                 u.name AS user_name, 
                 u.id AS user_id, 
                 g.title AS organization_title,
@@ -107,11 +108,12 @@ def get_organization_admin(username, group_id=None):
         # Konversi hasil query menjadi daftar dictionary
         data = [
             {
-                "user_name": row[0],
-                "user_id": row[1],
-                "organization_title": row[2],
-                "organization_name": row[3],
-                "capacity": row[4]
+                "user_name": row[1],
+                "user_id": row[2],
+                "group_id": row[0],
+                "organization_title": row[3],
+                "organization_name": row[4],
+                "capacity": row[5]
             }
             for row in result
         ]
