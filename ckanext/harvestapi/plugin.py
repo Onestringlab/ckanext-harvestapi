@@ -46,7 +46,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 preferred_username, email = get_username(token)
                 username = email.split('@')[0]
 
-                params = {}
+                params = {'limit': 10}
                 context = {'ignore_auth': True}
 
                 harvest_objects = toolkit.get_action('harvest_object_list')(context, params)
