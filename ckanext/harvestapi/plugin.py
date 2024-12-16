@@ -40,10 +40,14 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             """
             try:
                 # Query data dari tabel HarvestObject (atau sesuai kebutuhan Anda)
-                harvest_objects = toolkit.get_action('harvest_object_list')(
-                    # context={"ignore_auth": True},
-                    data_dict={}
-                )
+                token = request.headers.get("Authorization")
+                preferred_username, email = get_username(token)
+                username = email.split('@')[0]
+
+                params = {}
+                context = {'ignore_auth': True}
+
+                harvest_objects = toolkit.get_action('harvest_object_list')(context, params)
                 
                 # Kembalikan data dalam format JSON
                 return jsonify({
