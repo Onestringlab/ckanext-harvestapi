@@ -40,8 +40,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             """
             try:
                 # Query data dari tabel HarvestObject (atau sesuai kebutuhan Anda)
-                context = {'ignore_auth': True}
                 harvest_objects = toolkit.get_action('harvest_object_list')(
+                    context={"ignore_auth": True},
                     data_dict={}
                 )
                 
