@@ -47,10 +47,11 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 username = email.split('@')[0]
 
                 params = {'limit': 10, 'offset': 0} 
-                context = {'ignore_auth': True}
+                context = {"user": username}
+
 
                 # harvest_objects = toolkit.get_action('harvest_object_list')(context, params)
-                print(username)
+                print(context,username)
                 # Kembalikan data dalam format JSON
                 return jsonify({
                     "success": True,
