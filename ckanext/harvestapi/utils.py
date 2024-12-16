@@ -3,10 +3,6 @@ import jwt
 from flask import jsonify
 from ckan.plugins import toolkit
 
-def available_actions():
-    actions = toolkit.get_actions()
-    print("Available actions:", actions.keys())
-
 def get_username(jwt_token):
     try:
         # Dekode JWT tanpa memvalidasi signature dan expiration
