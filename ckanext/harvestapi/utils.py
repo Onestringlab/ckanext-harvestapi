@@ -2,6 +2,7 @@ import jwt
 
 from flask import jsonify
 from ckan.plugins import toolkit
+from ckan.model import meta, User
 
 def query_custom(query, params=None):
     """
