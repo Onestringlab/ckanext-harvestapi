@@ -58,7 +58,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 # Kembalikan data dalam format JSON
                 return jsonify({
                     "success": True,
-                    "result": "harvest_objects"
+                    "result": harvest_objects
                 })
             except Exception as e:
                 # Tangani error dan kembalikan pesan
