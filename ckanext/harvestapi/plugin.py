@@ -50,8 +50,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 context = {"user": username}
 
 
-                # harvest_objects = toolkit.get_action('harvest_object_list')(context, params)
+                harvest_objects = toolkit.get_action('harvest_object_list')(context, params)
                 print(context,username)
+
                 # Kembalikan data dalam format JSON
                 return jsonify({
                     "success": True,
