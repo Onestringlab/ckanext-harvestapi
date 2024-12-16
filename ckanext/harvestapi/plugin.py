@@ -36,7 +36,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 "success": True
             })
 
-        @blueprint_harvestapi.route("/get-harvest-data", methods=["GET"])
+        @blueprint_harvestapi.route("/get-harvest-data", methods=["POST"])
         def get_harvest_data():
             """
             Endpoint untuk mendapatkan data harvest
@@ -69,7 +69,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     'wt': 'json',
                     'rows': rows,
                     'start': start,
-                    'sort': sort
+                    'sort': sort,
+                    'fq': 'dataset_type:harvest' 
                 }
 
                 context = {'user': username,'ignore_auth': True}
