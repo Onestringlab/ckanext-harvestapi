@@ -3,6 +3,7 @@ import requests
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
+from ckan.logic import get_action
 from flask import Blueprint, jsonify, request
 from ckanext.harvest.model import HarvestObject
 
@@ -42,66 +43,23 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             """
             try:
                 # Query data dari tabel HarvestObject (atau sesuai kebutuhan Anda)
-                payload = request.get_json()
                 token = request.headers.get("Authorization")
-                if not payload:
-                    return jsonify({"success": False, "error": "Request body is required"}), 400
-
-                token = request.headers.get("Authorization")
-                _, email = get_username(token)
+                preferred_username, email = get_username(token)
                 username = email.split('@')[0]
-                
-                # Ambil parameter dari payload JSON
-                query = payload.get('q', '').strip()
-                rows = int(payload.get('rows', 10))
-                start = int(payload.get('start', 0))
-                sort = payload.get('sort', 'prioritas_tahun desc')
-                facet_limit = int(payload.get('facet.limit', 500))
-                organization = payload.get('organization', '').strip()
-                kategori = payload.get('kategori', '').strip()
-                prioritas_tahun = payload.get('prioritas_tahun', '').strip()
-                tags = payload.get('tags', '').strip()
-                res_format = payload.get('res_format', '').strip()
 
-                # Periksa panjang query
-                if len(query) == 0:  # Jika panjang query 0
-                    query = '*:*'
-                elif query != '*:*':  # Jika query bukan '*:*', gunakan format pencarian
-                    query = f"(title:*{query}* OR notes:*{query}*)"
-                
-                if organization:
-                    query += f" AND organization:{organization}"
-                if kategori:
-                    query += f" AND kategori:{kategori}"
-                if prioritas_tahun:
-                    query += f" AND prioritas_tahun:{prioritas_tahun}"
-                if tags:
-                    query += f" AND tags:{tags}"
-                if res_format:
-                    query += f" AND res_format:{res_format}"
-                
-                # Parameter untuk Solr
-                params = {
-                    'q': query,  # Query utama
-                    'wt': 'json',
-                    'rows': rows,
-                    'start': start,
-                    'sort': sort,
-                    'facet': 'true',
-                    'facet.field': ['organization', 'kategori', 'prioritas_tahun', 'tags', 'res_format'],
-                    'facet.limit': facet_limit
-                }
+                params = {'limit': 10, 'offset': 0} 
+                context = {"user": username}
+                print(context,username)
 
-                context = {'user': username,'ignore_auth': True}
-
-                # Jalankan package_search
-                response = get_action('package_search')(context, params)
-
+                harvest_objects = get_action('harvest_object_list')(
+                    context={"user":username}, 
+                    data_dict={}
+                )
 
                 # Kembalikan data dalam format JSON
                 return jsonify({
                     "success": True,
-                    "result": response
+                    "result": "harvest_objects"
                 })
             except Exception as e:
                 # Tangani error dan kembalikan pesan
