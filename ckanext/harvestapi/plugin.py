@@ -83,8 +83,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
             
-        @blueprint_harvestapi.route("/get-harvest-detail", methods=["POST"])
-        def get_harvest_detail():
+        @blueprint_harvestapi.route("/get-harvest-data-detail", methods=["POST"])
+        def get_harvest_data_detail():
             """
             Endpoint untuk mendapatkan data harvest
             """
