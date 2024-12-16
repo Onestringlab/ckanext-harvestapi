@@ -52,7 +52,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 _, email = get_username(token)
                 username = email.split('@')[0]
                 create_harvest = has_created_harvest(username)
-                print("create_harvest:", create_harvest)
+                print("create_harvest:", len(create_harvest))
 
                 # Ambil parameter dari payload JSON
                 query = payload.get('q', '').strip()
@@ -109,7 +109,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 package_detail = get_package_detail(harvest_source_id)
                 owner_org = package_detail["owner_org"]
                 manage_harvest = has_managed_harvest(username, owner_org)
-                print("manage_harvest:", manage_harvest)
+                print("manage_harvest:", len(manage_harvest))
 
                 # Parameter untuk Solr
                 params = {
@@ -130,5 +130,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 return jsonify({"success": False, "error": str(e)}), 500
 
         return blueprint_harvestapi
+
+        @blueprint_harvestapi.route("/get-admin-organization", methods=["POST"])
+        def get_admin_organization():
+            pass
 
 
