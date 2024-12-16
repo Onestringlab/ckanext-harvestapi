@@ -105,11 +105,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 # Parameter untuk Solr
                 params = {
-                    'q': query,  # Query utama
                     'wt': 'json',
                     'rows': rows,
                     'start': start,
-                    'sort': sort,
                     'fq': f"harvest_source_id:{harvest_source_id}" 
                 }
 
