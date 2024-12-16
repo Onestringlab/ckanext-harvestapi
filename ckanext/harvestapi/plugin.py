@@ -7,7 +7,7 @@ from ckan.logic import get_action
 from flask import Blueprint, jsonify, request
 from ckanext.harvest.model import HarvestObject
 
-from ckanext.harvestapi.utils import get_username, get_package_detail
+from ckanext.harvestapi.utils import get_username, get_package_detail, get_username_capacity
 
 
 class HarvestapiPlugin(plugins.SingletonPlugin):
