@@ -128,8 +128,6 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
 
-        return blueprint_harvestapi
-
         @blueprint_harvestapi.route("/get-admin-organization", methods=["POST"])
         def get_admin_organization():
             try:
@@ -147,3 +145,6 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
+    
+
+        return blueprint_harvestapi
