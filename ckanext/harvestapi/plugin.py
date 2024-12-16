@@ -82,5 +82,45 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
+            
+        @blueprint_harvestapi.route("/get-harvest-detail", methods=["POST"])
+        def get_harvest_detail():
+            """
+            Endpoint untuk mendapatkan data harvest
+            """
+            try:
+                # Ambil payload dari request body
+                payload = request.get_json()
+                if not payload:
+                    return jsonify({"success": False, "error": "Request body is required"}), 400
+
+                token = request.headers.get("Authorization")
+                _, email = get_username(token)
+                username = email.split('@')[0]
+
+                # Ambil parameter dari payload JSON
+                rows = int(payload.get('rows', 10))
+                start = int(payload.get('start', 0))
+                harvest_source_id = payload.get('harvest_source_id')
+
+                # Parameter untuk Solr
+                params = {
+                    'q': query,  # Query utama
+                    'wt': 'json',
+                    'rows': rows,
+                    'start': start,
+                    'sort': sort,
+                    'fq': f"harvest_source_id:{harvest_source_id}" 
+                }
+
+                context = {'user': username,'ignore_auth': True}
+
+                # Jalankan package_search
+                response = get_action('package_search')(context, params)
+
+                return jsonify({"success": True, "email": email, "data": response})
+
+            except Exception as e:
+                return jsonify({"success": False, "error": str(e)}), 500
 
         return blueprint_harvestapi
