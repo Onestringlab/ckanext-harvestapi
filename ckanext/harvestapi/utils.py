@@ -70,7 +70,7 @@ def get_organization_admin(username, group_id=None):
             m.state = 'active' 
             AND g.type = 'organization'
             AND u.name = :username
-            AND m.capacity = 'Admin'
+            AND m.capacity = 'admin'
     '''
 
     result = query_custom(query, {'username': username})
