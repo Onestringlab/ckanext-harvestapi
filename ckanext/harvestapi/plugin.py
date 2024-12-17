@@ -143,5 +143,43 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
     
+        @blueprint_harvestapi.route("/create-harvest-source", methods=["POST"])
+        def create_harvest_source():
+            try:
+                token = request.headers.get("Authorization")
+                _, email = get_username(token)
+                username = email.split('@')[0]
+
+                context = {"user": user}
+
+                name = payload.get("name")
+                title = payload.get("title")
+                source_type = payload.get("source_type")
+                url = payload.get("url")
+                frequency = payload.get("frequency")
+                owner_org = payload.get("owner_org")
+                config = payload.get("config", {})
+
+                # Menyiapkan data dictionary untuk action
+                data_dict = {
+                    "name": name,
+                    "title": title,
+                    "source_type": source_type,
+                    "url": url,
+                    "frequency": frequency,
+                    "owner_org": owner_org,
+                    "config": config  # Menambahkan konfigurasi tambahan
+                }
+
+                return {
+                    "success": True,
+                    "message": f"Harvest source '{title}' created successfully.",
+                    "data": result
+                }
+            except Exception as e:
+                return jsonify({"success": False, "error": str(e)}), 500
+
+
+
 
         return blueprint_harvestapi
