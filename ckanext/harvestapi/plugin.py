@@ -133,6 +133,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 harvest_source = get_action('harvest_source_show')(context, {'id': harvest_source_id})
                 print(harvest_source)
 
+                harvest_jobs = get_action('harvest_job_list')(context, {'source_id': harvest_source['id']})
+                print(harvest_jobs)
+
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
 
