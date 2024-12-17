@@ -158,16 +158,19 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 name = payload.get("name")
                 title = payload.get("title")
+                description = payload.get("description", "")
                 source_type = payload.get("source_type")
                 url = payload.get("url")
                 frequency = payload.get("frequency")
                 owner_org = payload.get("owner_org")
-                config = payload.get("config")
+                config = payload.get("config", {})
+                config_json = json.dumps(config)
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
                     "name": name,
                     "title": title,
+                    "description": description,
                     "source_type": source_type,
                     "url": url,
                     "frequency": frequency,
