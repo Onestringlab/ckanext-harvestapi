@@ -212,7 +212,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 harvest_source_id = payload.get("harvest_source_id") 
                 name = payload.get("name")
                 title = payload.get("title")
-                description = payload.get("description", "")
+                notes = payload.get("notes", "")
                 source_type = payload.get("source_type")
                 url = payload.get("url")
                 frequency = payload.get("frequency")
@@ -225,7 +225,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "id": harvest_source_id,
                     "name": name,
                     "title": title,
-                    "description": description,
+                    "notes": notes,
                     "source_type": source_type,
                     "url": url,
                     "frequency": frequency,
