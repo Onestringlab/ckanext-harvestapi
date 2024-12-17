@@ -119,23 +119,10 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 context = {'user': username,'ignore_auth': True}
 
                 harvest_source = get_action('harvest_source_show')(context, {'id': harvest_source_id})
-                print(harvest_source)
                 owner_org = harvest_source["owner_org"]
                 manage_harvest = has_managed_harvest(username, owner_org)
 
-                # Parameter untuk Solr
-                # params = {
-                #     'wt': 'json',
-                #     'rows': rows,
-                #     'start': start,
-                #     'fq': f"harvest_source_id:{harvest_source_id}" 
-                # }
-
                 harvest_jobs = get_action('harvest_job_list')(context, {'source_id': harvest_source['id']})
-                print(harvest_jobs)
-
-                # Jalankan package_search
-                # response = get_action('package_search')(context, params)
 
                 return jsonify({"success": True, "email": email, "data": harvest_source,
                                     "manage_harvest": manage_harvest, "harvest_jobs": harvest_jobs})
