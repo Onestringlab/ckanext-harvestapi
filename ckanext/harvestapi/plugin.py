@@ -186,6 +186,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "success": True,
                     "message": f"Harvest source '{title}' created successfully.",
                     "data": result,
+                    "email": email,
                     "manage_harvest": manage_harvest
                 })
                 else:
@@ -237,6 +238,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     return jsonify({
                         "success": True,
                         "message": f"Harvest source '{title}' updated successfully.",
+                        "email": email,
                         "data": result
                     })
                 else:
