@@ -150,7 +150,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 _, email = get_username(token)
                 username = email.split('@')[0]
 
-                context = {"user": username}
+                context = {'user': username,'ignore_auth': True}
 
                 payload = request.get_json()
                 if not payload:
