@@ -176,7 +176,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 return {
                     "success": True,
                     "message": f"Harvest source '{title}' created successfully.",
-                    "data": result
+                    "data": data_dict
                 }
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
