@@ -139,8 +139,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
 
-                return jsonify({"success": True, "email": email, "data": response, "about": package_detail,
-                                    "manage_harvest": manage_harvest})
+                return jsonify({"success": True, "email": email, "data": harvest_source, "about": package_detail,
+                                    "manage_harvest": manage_harvest, "harvest_jobs": harvest_jobs})
 
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
