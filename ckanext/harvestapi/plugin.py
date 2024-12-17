@@ -152,7 +152,10 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 context = {"user": username}
 
-                name = payload.get("name")
+                payload = request.get_json()
+                if not payload:
+                    return jsonify({"success": False, "error": "Request body is required"}), 400
+
                 title = payload.get("title")
                 source_type = payload.get("source_type")
                 url = payload.get("url")
@@ -162,13 +165,12 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
-                    "name": name,
                     "title": title,
                     "source_type": source_type,
                     "url": url,
                     "frequency": frequency,
                     "owner_org": owner_org,
-                    "config": config  # Menambahkan konfigurasi tambahan
+                    "config": config
                 }
 
                 return {
