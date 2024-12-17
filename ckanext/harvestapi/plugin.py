@@ -268,14 +268,14 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
-                    "id": harvest_source_id,
+                    "id": harvest_source_id
                 }
                 manage_harvest = has_managed_harvest(username,owner_org)
                 if(manage_harvest):
                     result = toolkit.get_action("harvest_source_delete")(context, data_dict)
                     return jsonify({
                         "success": True,
-                        "message": f"Harvest source '{title}' deleted successfully.",
+                        "message": f"Harvest source '{harvest_source_id}' deleted successfully.",
                         "email": email,
                         "data": result
                     })
