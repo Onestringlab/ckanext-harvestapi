@@ -150,7 +150,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 _, email = get_username(token)
                 username = email.split('@')[0]
 
-                context = {"user": user}
+                context = {"user": username}
 
                 name = payload.get("name")
                 title = payload.get("title")
