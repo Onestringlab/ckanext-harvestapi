@@ -310,7 +310,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 }
                 manage_harvest = has_managed_harvest(username,owner_org)
                 if(manage_harvest):
-                    result = toolkit.get_action("harvest_source_refresh")(context, data_dict)
+                    result = toolkit.get_action("harvest_source_reharvest")(context, data_dict)
                     return jsonify({
                         "success": True,
                         "message": f"Harvest source '{harvest_source_id}' refreshed successfully.",
