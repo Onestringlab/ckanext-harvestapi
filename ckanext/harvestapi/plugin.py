@@ -163,6 +163,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 frequency = payload.get("frequency")
                 owner_org = payload.get("owner_org")
                 config = payload.get("config", {})
+                config_json = json.dumps(config)
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
@@ -172,7 +173,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "url": url,
                     "frequency": frequency,
                     "owner_org": owner_org,
-                    "config": config
+                    "config": config_json
                 }
 
                 result = toolkit.get_action("harvest_source_create")(context, data_dict)
