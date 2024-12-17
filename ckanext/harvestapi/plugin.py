@@ -189,6 +189,51 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
 
+        @blueprint_harvestapi.route("/update-harvest-source", methods=["POST"])
+        def update_harvest_source():
+            try:
+                token = request.headers.get("Authorization")
+                _, email = get_username(token)
+                username = email.split('@')[0]
+
+                context = {'user': username,'ignore_auth': True}
+
+                payload = request.get_json()
+                if not payload:
+                    return jsonify({"success": False, "error": "Request body is required"}), 400
+
+                harvest_source_id = payload.get("harvest_source_id") 
+                name = payload.get("name")
+                title = payload.get("title")
+                description = payload.get("description", "")
+                source_type = payload.get("source_type")
+                url = payload.get("url")
+                frequency = payload.get("frequency")
+                config = payload.get("config", {})
+                config_json = json.dumps(config)
+
+                # Menyiapkan data dictionary untuk action
+                data_dict = {
+                    "id": harvest_source_id,
+                    "name": name,
+                    "title": title,
+                    "description": description,
+                    "source_type": source_type,
+                    "url": url,
+                    "frequency": frequency,
+                    "config": config_json
+                }
+
+                result = toolkit.get_action("harvest_source_update")(context, data_dict)
+                
+                return jsonify({
+                    "success": True,
+                    "message": f"Harvest source '{title}' updated successfully.",
+                    "data": result
+                })
+            except Exception as e:
+                return jsonify({"success": False, "error": str(e)}), 500
+
 
 
 
