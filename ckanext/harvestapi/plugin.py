@@ -179,7 +179,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "config": config_json
                 }
 
-                manage_harvest = has_created_harvest(username,owner_org)
+                manage_harvest = has_managed_harvest(username,owner_org)
                 if(manage_harvest):
                     result = toolkit.get_action("harvest_source_create")(context, data_dict)
                     return jsonify({
