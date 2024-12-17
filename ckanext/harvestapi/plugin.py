@@ -250,7 +250,43 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
 
+        @blueprint_harvestapi.route("/delete-harvest-source", methods=["POST"])
+        def delete_harvest_source():
+            try:
+                token = request.headers.get("Authorization")
+                _, email = get_username(token)
+                username = email.split('@')[0]
 
+                context = {'user': username,'ignore_auth': True}
+
+                payload = request.get_json()
+                if not payload:
+                    return jsonify({"success": False, "error": "Request body is required"}), 400
+
+                harvest_source_id = payload.get("harvest_source_id") 
+                owner_org = payload.get("owner_org")
+
+                # Menyiapkan data dictionary untuk action
+                data_dict = {
+                    "id": harvest_source_id,
+                }
+                manage_harvest = has_managed_harvest(username,owner_org)
+                if(manage_harvest):
+                    result = toolkit.get_action("harvest_source_delete")(context, data_dict)
+                    return jsonify({
+                        "success": True,
+                        "message": f"Harvest source '{title}' deleted successfully.",
+                        "email": email,
+                        "data": result
+                    })
+                else:
+                    return jsonify({
+                    "success": False,
+                    "message": f"Unauthorized user."
+                })
+
+            except Exception as e:
+                return jsonify({"success": False, "error": str(e)}), 500
 
 
         return blueprint_harvestapi
