@@ -179,12 +179,18 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "config": config_json
                 }
 
-                result = toolkit.get_action("harvest_source_create")(context, data_dict)
-                
-                return jsonify({
+                manage_harvest = has_created_harvest(username,owner_org)
+                if(manage_harvest):
+                    result = toolkit.get_action("harvest_source_create")(context, data_dict)
+                    return jsonify({
                     "success": True,
                     "message": f"Harvest source '{title}' created successfully.",
                     "data": result
+                })
+                else:
+                    return jsonify({
+                    "success": False,
+                    "message": f"Harvest source '{title}' created unsuccessfully."
                 })
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
