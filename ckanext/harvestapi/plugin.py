@@ -1,4 +1,5 @@
 import jwt
+import json
 import requests
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
@@ -175,7 +176,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "url": url,
                     "frequency": frequency,
                     "owner_org": owner_org,
-                    "config": config
+                    "config": config_json
                 }
 
                 result = toolkit.get_action("harvest_source_create")(context, data_dict)
