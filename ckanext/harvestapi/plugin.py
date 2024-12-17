@@ -159,7 +159,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 name = payload.get("name")
                 title = payload.get("title")
-                description = payload.get("description", "")
+                notes = payload.get("notes", "")
                 source_type = payload.get("source_type")
                 url = payload.get("url")
                 frequency = payload.get("frequency")
@@ -171,7 +171,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 data_dict = {
                     "name": name,
                     "title": title,
-                    "description": description,
+                    "notes": notes,
                     "source_type": source_type,
                     "url": url,
                     "frequency": frequency,
