@@ -191,7 +191,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 else:
                     return jsonify({
                     "success": False,
-                    "message": f"Harvest source '{title}' created unsuccessfully."
+                    "message": f"Unauthorized user."
                 })
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
