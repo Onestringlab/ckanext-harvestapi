@@ -156,6 +156,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 if not payload:
                     return jsonify({"success": False, "error": "Request body is required"}), 400
 
+                name = payload.get("name")
                 title = payload.get("title")
                 source_type = payload.get("source_type")
                 url = payload.get("url")
@@ -165,6 +166,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
+                    "name": name,
                     "title": title,
                     "source_type": source_type,
                     "url": url,
