@@ -216,6 +216,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 source_type = payload.get("source_type")
                 url = payload.get("url")
                 frequency = payload.get("frequency")
+                owner_org = payload.get("owner_org")
                 config = payload.get("config", {})
                 config_json = json.dumps(config)
 
@@ -230,14 +231,20 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "frequency": frequency,
                     "config": config_json
                 }
-
-                result = toolkit.get_action("harvest_source_update")(context, data_dict)
-                
-                return jsonify({
-                    "success": True,
-                    "message": f"Harvest source '{title}' updated successfully.",
-                    "data": result
+                manage_harvest = has_managed_harvest(username,owner_org)
+                if(manage_harvest):
+                    result = toolkit.get_action("harvest_source_update")(context, data_dict)
+                    return jsonify({
+                        "success": True,
+                        "message": f"Harvest source '{title}' updated successfully.",
+                        "data": result
+                    })
+                else:
+                    return jsonify({
+                    "success": False,
+                    "message": f"Unauthorized user."
                 })
+
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
 
