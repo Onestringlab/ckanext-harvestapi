@@ -130,6 +130,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 context = {'user': username,'ignore_auth': True}
 
+                harvest_source = get_action('harvest_source_show')(context, {'id': harvest_source_id})
+                print(harvest_source)
+
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
 
