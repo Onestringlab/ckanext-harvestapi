@@ -173,11 +173,13 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "config": config
                 }
 
-                return {
+                result = toolkit.get_action("harvest_source_create")(context, data_dict)
+                
+                return jsonify({
                     "success": True,
                     "message": f"Harvest source '{title}' created successfully.",
-                    "data": data_dict
-                }
+                    "data": result
+                })
             except Exception as e:
                 return jsonify({"success": False, "error": str(e)}), 500
 
