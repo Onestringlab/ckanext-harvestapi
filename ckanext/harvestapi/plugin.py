@@ -4,6 +4,8 @@ import requests
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
+
+from ckan.model import User
 from ckan.logic import get_action
 from flask import Blueprint, jsonify, request
 from ckanext.harvest.model import HarvestObject
