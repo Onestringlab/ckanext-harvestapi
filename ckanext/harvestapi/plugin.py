@@ -58,7 +58,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 query = payload.get('q', '').strip()
                 rows = int(payload.get('rows', 10))
                 start = int(payload.get('start', 0))
-                sort = payload.get('sort', 'prioritas_tahun desc')
+                sort = payload.get('sort', 'score desc')
                 facet_limit = int(payload.get('facet.limit', 500))
                 frequency = payload.get('frequency', '').strip()
                 source_type = payload.get('source_type', '').strip()
@@ -314,6 +314,81 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     return jsonify({
                         "success": True,
                         "message": f"Harvest source '{harvest_source_id}' refreshed successfully.",
+                        "email": email,
+                        "data": result
+                    })
+                else:
+                    return jsonify({
+                    "success": False,
+                    "message": f"Unauthorized user."
+                })
+
+            except Exception as e:
+                return jsonify({"success": False, "error": str(e)}), 500
+
+        @blueprint_harvestapi.route("/harvest-source-clear", methods=["POST"])
+        def harvest_source_clear():
+            try:
+                token = request.headers.get("Authorization")
+                _, email = get_username(token)
+                username = email.split('@')[0]
+
+                context = {'user': username,'ignore_auth': True}
+
+                payload = request.get_json()
+                if not payload:
+                    return jsonify({"success": False, "error": "Request body is required"}), 400
+
+                harvest_source_id = payload.get("harvest_source_id") 
+                owner_org = payload.get("owner_org")
+
+                # Menyiapkan data dictionary untuk action
+                data_dict = {
+                    "source_id": harvest_source_id
+                }
+                manage_harvest = has_managed_harvest(username,owner_org)
+                if(manage_harvest):
+                    result = toolkit.get_action("harvest_source_clear")(context, data_dict)
+                    return jsonify({
+                        "success": True,
+                        "message": f"Harvest source '{harvest_source_id}' cleared successfully.",
+                        "email": email,
+                        "data": result
+                    })
+                else:
+                    return jsonify({
+                    "success": False,
+                    "message": f"Unauthorized user."
+                })
+
+            except Exception as e:
+                return jsonify({"success": False, "error": str(e)}), 500
+        
+        @blueprint_harvestapi.route("/harvest-job-abort", methods=["POST"])
+        def harvest_job_abort():
+            try:
+                token = request.headers.get("Authorization")
+                _, email = get_username(token)
+                username = email.split('@')[0]
+
+                context = {'user': username,'ignore_auth': True}
+
+                payload = request.get_json()
+                if not payload:
+                    return jsonify({"success": False, "error": "Request body is required"}), 400
+
+                job_id = payload.get("job_id") 
+
+                # Menyiapkan data dictionary untuk action
+                data_dict = {
+                    "id": job_id
+                }
+                user = User.get(username)
+                if user.sysadmin:
+                    result = toolkit.get_action("harvest_job_abort")(context, data_dict)
+                    return jsonify({
+                        "success": True,
+                        "message": f"Job '{job_id}' aborted successfully.",
                         "email": email,
                         "data": result
                     })
