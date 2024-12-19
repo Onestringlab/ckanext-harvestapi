@@ -346,7 +346,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
-                    "source_id": harvest_source_id
+                    "id": harvest_source_id
                 }
                 manage_harvest = has_managed_harvest(username,owner_org)
                 if(manage_harvest):
