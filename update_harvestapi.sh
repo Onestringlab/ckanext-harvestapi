@@ -9,6 +9,12 @@ git add .
 git commit -m "$COMMIT_MESSAGE"
 git push -u origin master
 
+# Path host untuk ekstensi
+HOST_EXT_PATH="/srv/app/ext_2024/ckanext-harvestapi"
+
+# URL repository
+REPO_URL="https://repo.tech-dev.id/sdi/ckan/ckanext-harvestapi.git"
+
 # Nama container Docker
 CONTAINER_NAME="ckan"
 
@@ -17,9 +23,8 @@ EXT_PATH="/srv/app/ext_2024/ckanext-harvestapi"
 
 # Perintah untuk menjalankan pembaruan
 docker exec "$CONTAINER_NAME" bash -c "
-    cd $EXT_PATH &&
-    git pull &&
-    pip install -e .
+    [ ! -d $EXT_PATH ] && git clone $REPO_URL $EXT_PATH
+    cd $EXT_PATH && git pull && pip install -e .
 "
 
 # Restart container (opsional, hapus jika tidak diperlukan)
