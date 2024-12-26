@@ -61,7 +61,6 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     _, email = get_username(token_value)
                     username = email.split('@')[0]
                 
-                data = get_username_capacity(username)
                 create_harvest = has_created_harvest(username)
 
                 query = payload.get('q', '').strip()
