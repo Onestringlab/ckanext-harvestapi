@@ -146,9 +146,15 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
         @blueprint_harvestapi.route("/get-admin-organization", methods=["POST"])
         def get_admin_organization():
             try:
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
 
                 organization_admin = get_organization_admin(username)
                 return jsonify({"success": True, "email": email, "data": organization_admin})
@@ -159,9 +165,15 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
         @blueprint_harvestapi.route("/create-harvest-source", methods=["POST"])
         def create_harvest_source():
             try:
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
 
                 context = {'user': username,'ignore_auth': True}
 
@@ -191,7 +203,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "config": config_json
                 }
 
-                manage_harvest = has_managed_harvest(username,owner_org)
+                manage_harvest = has_managed_harvest(username, owner_org)
                 if(manage_harvest):
                     result = toolkit.get_action("harvest_source_create")(context, data_dict)
                     return jsonify({
@@ -212,9 +224,15 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
         @blueprint_harvestapi.route("/update-harvest-source", methods=["POST"])
         def update_harvest_source():
             try:
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
 
                 context = {'user': username,'ignore_auth': True}
 
@@ -265,9 +283,15 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
         @blueprint_harvestapi.route("/delete-harvest-source", methods=["POST"])
         def delete_harvest_source():
             try:
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
 
                 context = {'user': username,'ignore_auth': True}
 
@@ -303,9 +327,15 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
         @blueprint_harvestapi.route("/refresh-harvest-source", methods=["POST"])
         def refresh_harvest_source():
             try:
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
 
                 context = {'user': username,'ignore_auth': True}
 
@@ -341,9 +371,15 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
         @blueprint_harvestapi.route("/harvest-source-clear", methods=["POST"])
         def harvest_source_clear():
             try:
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
 
                 context = {'user': username,'ignore_auth': True}
 
@@ -379,9 +415,15 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
         @blueprint_harvestapi.route("/harvest-job-abort", methods=["POST"])
         def harvest_job_abort():
             try:
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
 
                 context = {'user': username,'ignore_auth': True}
 
