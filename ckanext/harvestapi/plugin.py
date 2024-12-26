@@ -36,7 +36,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             Route untuk /welcome_harvest
             """
             return jsonify({
-                "message": "Welcome to Harvest API Bro Bre!!!",
+                "message": "Welcome to Harvest API 10",
                 "success": True
             })
 
@@ -51,34 +51,40 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 if not payload:
                     return jsonify({"success": False, "error": "Request body is required"}), 400
 
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
+                
+                data = get_username_capacity(username)
                 create_harvest = has_created_harvest(username)
 
-                # Ambil parameter dari payload JSON
                 query = payload.get('q', '').strip()
                 rows = int(payload.get('rows', 10))
                 start = int(payload.get('start', 0))
-                sort = payload.get('sort', 'score desc,metadata_modified desc')
+                sort = payload.get('sort', 'score desc, metadata_modified desc')
                 facet_limit = int(payload.get('facet.limit', 500))
                 frequency = payload.get('frequency', '').strip()
                 source_type = payload.get('source_type', '').strip()
 
                 # Periksa panjang query
-                if len(query) == 0:  # Jika panjang query 0
+                if len(query) == 0: 
                     query = '*:*'
-                elif query != '*:*':  # Jika query bukan '*:*', gunakan format pencarian
-                    query = f"(title:*{query}* OR notes:*{query}*)"
+                elif query != '*:*':
+                    query = f"(title:{query} OR notes:{query})"
 
                 if frequency:
                     query += f" AND frequency:{frequency}"
                 if source_type:
                     query += f" AND source_type:{source_type}"
 
-                # Parameter untuk Solr
                 params = {
-                    'q': query,  # Query utama
+                    'q': query,
                     'wt': 'json',
                     'rows': rows,
                     'start': start,
@@ -110,11 +116,16 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 if not payload:
                     return jsonify({"success": False, "error": "Request body is required"}), 400
 
+                email = "anonymous@somedomain.com"
+                username = "anonymous"
                 token = request.headers.get("Authorization")
-                _, email = get_username(token)
-                username = email.split('@')[0]
+                if token:
+                    if not token.startswith("Bearer "):
+                        return jsonify({"error": "Invalid authorization format"}), 400
+                    token_value = token.split(" ", 1)[1]
+                    _, email = get_username(token_value)
+                    username = email.split('@')[0]
 
-                # Ambil parameter dari payload JSON
                 rows = int(payload.get('rows', 10))
                 start = int(payload.get('start', 0))
                 harvest_source_id = payload.get('harvest_source_id')
