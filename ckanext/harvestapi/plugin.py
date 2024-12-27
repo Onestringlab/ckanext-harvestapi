@@ -67,7 +67,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 rows = int(payload.get('rows', 10))
                 start = int(payload.get('start', 0))
                 sort = payload.get('sort', 'score desc, metadata_modified desc')
-                facet_limit = int(payload.get('facet.limit', 500))
+                facet_limit = int(payload.get('facet_limit', 500))
                 frequency = payload.get('frequency', '').strip()
                 source_type = payload.get('source_type', '').strip()
 
