@@ -302,6 +302,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 harvest_source_id = payload.get("harvest_source_id") 
                 owner_org = payload.get("owner_org")
                 clear_source = payload.get("clear_source", False)
+                clear_source = bool(clear_source) if isinstance(clear_source, bool) else str(clear_source).lower() == 'true'
                 context['clear_source'] = clear_source
 
                 # Menyiapkan data dictionary untuk action
