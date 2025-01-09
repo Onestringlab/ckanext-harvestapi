@@ -301,11 +301,14 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
                 harvest_source_id = payload.get("harvest_source_id") 
                 owner_org = payload.get("owner_org")
+                clear_source = payload.get("clear_source", False)
+                context['clear_source'] = clear_source
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
                     "id": harvest_source_id
                 }
+
                 manage_harvest = has_managed_harvest(username,owner_org)
                 if(manage_harvest):
                     result = toolkit.get_action("harvest_source_delete")(context, data_dict)
