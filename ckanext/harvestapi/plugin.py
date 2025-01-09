@@ -1,5 +1,6 @@
 import jwt
 import json
+import logging
 import requests
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
@@ -27,6 +28,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
 
     # IBlueprint
     def get_blueprint(self):
+
+        log = logging.getLogger(__name__)
+        
         # Method untuk mendaftarkan Blueprint.
         blueprint_harvestapi = Blueprint('harvestapi', __name__,url_prefix='/api/1/harvest')
 
