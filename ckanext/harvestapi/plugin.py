@@ -254,8 +254,10 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 url = payload.get("url")
                 frequency = payload.get("frequency")
                 owner_org = payload.get("owner_org")
-                config = payload.get("config", {})
-                config_json = json.dumps(config)
+                config = payload.get("config")              
+
+                # config = payload.get("config", {})
+                # config_json = json.dumps(config)
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
@@ -266,7 +268,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "source_type": source_type,
                     "url": url,
                     "frequency": frequency,
-                    "config": config_json
+                    "config": config
                 }
                 manage_harvest = has_managed_harvest(username,owner_org)
                 if(manage_harvest):
