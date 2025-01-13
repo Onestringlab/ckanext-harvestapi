@@ -100,7 +100,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 auth_user = User.get(username)
                 log.info(f'{username}')
                 log.info(f'{auth_user}')
-                context = {'user': username, 'auth_user_obj': auth_user,'ignore_auth': False}
+                context = {'user': 'dbff9d0a-b5a3-46ad-a0fd-3dad8513550d', 'auth_user_obj': auth_user,'ignore_auth': False}
 
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
