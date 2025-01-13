@@ -97,10 +97,8 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     'facet.field': ['frequency', 'source_type'],
                     'facet.limit': facet_limit
                 }
-                auth_user = User.get('aptekadmin')
-                log.info(f'{username}')
-                log.info(f'{auth_user}')
-                context = {'user': auth_user.name, 'auth_user_obj': auth_user,'ignore_auth': False}
+
+                context = {'user': username,'ignore_auth': True}
 
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
