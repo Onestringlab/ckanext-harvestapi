@@ -98,7 +98,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     'facet.limit': facet_limit
                 }
                 log.info(f'{username}')
-                context = {'user': username,'auth_user_obj': model.User.get(username),'ignore_auth': False}
+                context = {'user': username,'auth_user_obj': User.get(username),'ignore_auth': False}
 
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
