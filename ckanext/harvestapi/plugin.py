@@ -97,7 +97,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     'facet.field': ['frequency', 'source_type'],
                     'facet.limit': facet_limit
                 }
-
+                log.info(f'{username}')
                 context = {'user': username,'ignore_auth': False}
 
                 # Jalankan package_search
