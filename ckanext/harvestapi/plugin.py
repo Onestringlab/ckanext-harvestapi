@@ -98,7 +98,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     'facet.limit': facet_limit
                 }
 
-                context = {'user': username,'ignore_auth': True}
+                context = {'user': username,'ignore_auth': False}
 
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
