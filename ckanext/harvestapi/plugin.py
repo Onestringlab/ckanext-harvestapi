@@ -100,7 +100,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 auth_user = User.get('aptekadmin')
                 log.info(f'{username}')
                 log.info(f'{auth_user}')
-                context = {'user': auth_user_obj.name, 'auth_user_obj': auth_user,'ignore_auth': False}
+                context = {'user': auth_user.name, 'auth_user_obj': auth_user,'ignore_auth': False}
 
                 # Jalankan package_search
                 response = get_action('package_search')(context, params)
