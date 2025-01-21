@@ -40,7 +40,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             Route untuk /welcome_harvest
             """
             return jsonify({
-                "message": "Welcome to Harvest API 13.1",
+                "message": "Welcome to Harvest API 21.1",
                 "success": True
             })
 
@@ -319,7 +319,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     "id": harvest_source_id
                 }
 
-                manage_harvest = has_managed_harvest(username,owner_org)
+                manage_harvest = has_managed_harvest(username, owner_org)
                 if(manage_harvest):
                     result = toolkit.get_action("harvest_source_delete")(context, data_dict)
                     return jsonify({
