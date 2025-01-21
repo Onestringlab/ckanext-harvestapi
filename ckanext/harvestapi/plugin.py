@@ -312,7 +312,6 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 clear_source = payload.get("clear_source", False)
                 clear_source = bool(clear_source) if isinstance(clear_source, bool) else str(clear_source).lower() == 'true'
                 context['clear_source'] = clear_source
-                # log.info(f'{clear_source} {context["clear_source"]}' )
 
                 # Menyiapkan data dictionary untuk action
                 data_dict = {
@@ -322,6 +321,9 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 manage_harvest = has_managed_harvest(username, owner_org)
                 if(manage_harvest):
                     result = toolkit.get_action("harvest_source_delete")(context, data_dict)
+                    if clear_source:
+                        log.info(f'{clear_source} {context["clear_source"]}') 
+                        result = toolkit.get_action("harvest_source_clear")(context, data_dict)
                     return jsonify({
                         "success": True,
                         "message": f"Harvest source '{harvest_source_id}' deleted successfully.",
