@@ -321,6 +321,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 manage_harvest = has_managed_harvest(username, owner_org)
                 if(manage_harvest):
                     result = toolkit.get_action("harvest_source_delete")(context, data_dict)
+                     log.info(f'harvest_source_delete: {manage_harvest}') 
                     if clear_source:
                         log.info(f'harvest_source_clear: {clear_source}') 
                         result = toolkit.get_action("harvest_source_clear")(context, data_dict)
