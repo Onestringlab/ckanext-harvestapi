@@ -14,7 +14,6 @@ from ckanext.harvest.model import HarvestObject
 from ckanext.harvestapi.utils import get_username, get_package_detail, get_organization_admin
 from ckanext.harvestapi.utils import has_created_harvest,has_managed_harvest
 
-
 class HarvestapiPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IBlueprint)
