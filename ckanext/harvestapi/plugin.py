@@ -322,7 +322,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                 if(manage_harvest):
                     result = toolkit.get_action("harvest_source_delete")(context, data_dict)
                     if clear_source:
-                        log.info(f'{clear_source} {context["clear_source"]}') 
+                        log.info(f'harvest_source_clear: {clear_source}') 
                         result = toolkit.get_action("harvest_source_clear")(context, data_dict)
                     return jsonify({
                         "success": True,
