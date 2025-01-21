@@ -325,8 +325,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
                     return jsonify({
                         "success": True,
                         "message": f"Harvest source '{harvest_source_id}' deleted successfully.",
-                        "email": email,
-                        "data": result
+                        "email": email
                     })
                 else:
                     return jsonify({
