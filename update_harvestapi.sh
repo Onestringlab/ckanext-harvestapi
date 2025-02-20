@@ -27,5 +27,5 @@ docker exec "$CONTAINER_NAME" bash -c "
     cd $EXT_PATH && git pull && pip install -e .
 "
 
-# Restart container (opsional, hapus jika tidak diperlukan)
+# Restart container (opsional, hapus jika tidak diperlukan) #
 docker restart "$CONTAINER_NAME"
