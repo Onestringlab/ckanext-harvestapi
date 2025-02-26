@@ -4,13 +4,9 @@
 COMMIT_MESSAGE="Initial Commit"
 
 # Perintah git di host
-cd "$HOST_EXT_PATH" || exit
 git add .
 git commit -m "$COMMIT_MESSAGE"
 git push -u origin master
-
-# Path host untuk ekstensi
-HOST_EXT_PATH="/srv/app/ext_2024/ckanext-harvestapi"
 
 # URL repository
 REPO_URL="https://repo.tech-dev.id/sdi/ckan/ckanext-harvestapi.git"
