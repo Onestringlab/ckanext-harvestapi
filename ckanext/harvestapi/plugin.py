@@ -39,7 +39,7 @@ class HarvestapiPlugin(plugins.SingletonPlugin):
             Route untuk /welcome_harvest
             """
             return jsonify({
-                "message": "Welcome to Harvest API 26.1",
+                "message": "Welcome to Harvest API 26.02",
                 "success": True
             })
 

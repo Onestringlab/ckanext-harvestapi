@@ -4,13 +4,9 @@
 COMMIT_MESSAGE="Initial Commit"
 
 # Perintah git di host
-cd "$HOST_EXT_PATH" || exit
 git add .
 git commit -m "$COMMIT_MESSAGE"
 git push -u origin master
-
-# Path host untuk ekstensi
-HOST_EXT_PATH="/srv/app/ext_2024/ckanext-harvestapi"
 
 # URL repository
 REPO_URL="https://repo.tech-dev.id/sdi/ckan/ckanext-harvestapi.git"
@@ -19,7 +15,7 @@ REPO_URL="https://repo.tech-dev.id/sdi/ckan/ckanext-harvestapi.git"
 CONTAINER_NAME="ckan"
 
 # Path ke direktori ekstensi di dalam container
-EXT_PATH="/srv/app/ext_2024/ckanext-harvestapi"
+EXT_PATH="/srv/app/ckanext-harvestapi"
 
 # Perintah untuk menjalankan pembaruan
 docker exec "$CONTAINER_NAME" bash -c "
